@@ -15,9 +15,9 @@ class TareasRepository {
     }
 
     async create(tarea) {
-        const sql = 'INSERT INTO tareas (titulo, descripcion, estado) VALUES (?, ?, ?)';
+        const sql = 'INSERT INTO tareas (titulo, descripcion, estado) VALUES (?)';
         const params = [tarea.titulo, tarea.descripcion, tarea.estado];
-        const result = await mysql.query(sql, [params]);
+        const result = mysql.query(sql, [params]);
         tarea.id = result.insertId;
         return tarea;
     }
@@ -32,7 +32,6 @@ class TareasRepository {
     async delete(id) {
         const sql = 'DELETE FROM tareas WHERE id = ?';
         await mysql.query(sql, [id]);
-        
     }
 }
 
