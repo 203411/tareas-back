@@ -15,7 +15,7 @@ class TareasRepository {
     }
 
     async create(tarea) {
-        const sql = 'INSERT INTO tareas (titulo, descripcion, estado) VALUES (?, ?, ?)';
+        const sql = 'INSERT INTO tareas (titulo, descripcion, estado) VALUES (?)';
         const params = [tarea.titulo, tarea.descripcion, tarea.estado];
         const result = await mysql.query(sql, [params]);
         tarea.id = result.insertId;
