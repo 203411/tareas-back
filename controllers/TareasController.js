@@ -1,10 +1,12 @@
 class TareasController {
-    constructor(getTareaListUseCase, createTareaUseCase, getTareaByIdUseCase, updateTareaUseCase, deleteTareaUseCase) {
+    constructor(getTareaListUseCase, createTareaUseCase, getTareaByIdUseCase, updateTareaUseCase, deleteTareaUseCase, updateAllTareaUseCase, deleteAllTareaUseCase) {
         this.getTareaListUseCase = getTareaListUseCase;
         this.createTareaUseCase = createTareaUseCase;
         this.getTareaByIdUseCase = getTareaByIdUseCase;
         this.updateTareaUseCase = updateTareaUseCase;
         this.deleteTareaUseCase = deleteTareaUseCase;
+        this.updateAllTareaUseCase = updateAllTareaUseCase;
+        this.deleteAllTareaUseCase = deleteAllTareaUseCase;
     }
 
     async getAll(req, res, next) {
@@ -58,6 +60,28 @@ class TareasController {
         try{
             await this.deleteTareaUseCase.execute(req.params.id);
             res.status(204).json();
+        }catch(error){
+            res.status(500).json({error: error.message});
+            // next(error);
+        }
+    }
+
+    async updateAll(req, res, next) {
+        try{
+            const array = req.body;
+            const tareas = await this.updateAllTareaUseCase.execute(array);
+            res.status(200).json(tareas);
+        }catch(error){
+            res.status(500).json({error: error.message});
+            // next(error);
+        }
+    }
+
+    async deleteAll(req, res, next) {
+        try{
+            const array = req.body.primary_keys;
+            const tareas = await this.deleteAllTareaUseCase.execute(array);
+            res.status(200).json(tareas);
         }catch(error){
             res.status(500).json({error: error.message});
             // next(error);

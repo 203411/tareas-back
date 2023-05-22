@@ -33,6 +33,25 @@ class TareasRepository {
         const sql = 'DELETE FROM tareas WHERE id = ?';
         await mysql.query(sql, [id]);
     }
+
+        async updateAll(array) {
+        const sql = 'UPDATE tareas SET titulo = ?, descripcion = ?, estado = ? WHERE id = ?';
+        for (let i = 0; i < array.length; i++) {
+
+            const params = [array[i].titulo, array[i].descripcion, array[i].estado, array[i].id];
+            console.log("params");
+            await mysql.query(sql, params);
+        }
+        return array;
+    }
+
+    async deleteAll(array) {
+        const sql = 'DELETE FROM tareas WHERE id = ?';
+        for (let i = 0; i < array.length; i++) {
+            console.log(array[i]);
+            await mysql.query(sql, array[i]);
+        }
+    }
 }
 
 module.exports = TareasRepository;
