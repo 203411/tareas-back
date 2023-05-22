@@ -34,11 +34,10 @@ class TareasController {
 
     async create(req, res, next) {
         try{
-            console.log(req.body);
-            const {titulo, descripcion, estado} = req.body;
-            console.log(titulo, descripcion, estado);
-            const newTarea = {titulo, descripcion, estado};
-            const tarea = await this.createTareaUseCase.execute(newTarea);
+            // const newTarea = req.body;
+            // const tarea = await this.createTareaUseCase.execute(newTarea);
+            const tareas = req.body;
+            const tarea = await this.createTareaUseCase.execute(tareas);
             res.status(201).json(tarea);
         }catch(error){
             res.status(500).json({error: error.message});

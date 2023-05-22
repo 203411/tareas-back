@@ -16,13 +16,19 @@ class TareasRepository {
 
     async create(tarea) {
         const sql = 'INSERT INTO tareas (titulo, descripcion, estado) VALUES (?)';
-        const params = [tarea.titulo, tarea.descripcion, tarea.estado];
-        const result = mysql.query(sql, [params]);
-        tarea.id = result.insertId;
+        // const params = [tarea.titulo, tarea.descripcion, tarea.estado];
+        // const result = mysql.query(sql, [params]);
+        // tarea.id = result.insertId;
+        for (let i = 0; i < tarea.length; i++) {
+            const params = [tarea[i].titulo, tarea[i].descripcion, tarea[i].estado];
+            const result = mysql.query(sql, [params]);
+            tarea[i].id = result.insertId;
+        }
         return tarea;
     }
 
     async update(tarea) {
+        console.log(tarea);
         const sql = 'UPDATE tareas SET titulo = ?, descripcion = ?, estado = ? WHERE id = ?';
         const params = [tarea.titulo, tarea.descripcion, tarea.estado, tarea.id];
         await mysql.query(sql, params);
